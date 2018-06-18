@@ -10,14 +10,14 @@ namespace WordCount.Utils
         private readonly List<IEnumerator<T>> _sortedEnumerators;
         private bool _mergeCalled = false;
 
-        public KWayMerge(IEnumerator<T>[] sortedEnumerables, Func<T, T, bool> greatherThanFunc)
+        public KWayMerge(IEnumerator<T>[] sortedEnumerators, Func<T, T, bool> greatherThanFunc)
         {
-            if (sortedEnumerables == null) throw new ArgumentNullException(nameof(sortedEnumerables));
-            if (sortedEnumerables.Length == 0)
-                throw new ArgumentException("Value cannot be an empty collection.", nameof(sortedEnumerables));
+            if (sortedEnumerators == null) throw new ArgumentNullException(nameof(sortedEnumerators));
+            if (sortedEnumerators.Length == 0)
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(sortedEnumerators));
             _greatherThanFunc = greatherThanFunc ?? throw new ArgumentNullException(nameof(greatherThanFunc));
 
-            _sortedEnumerators = sortedEnumerables
+            _sortedEnumerators = sortedEnumerators
                 .Where(en => en.MoveNext()) // only non-empty enumerators
                 .ToList();
 
