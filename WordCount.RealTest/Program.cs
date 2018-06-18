@@ -14,7 +14,8 @@ namespace WordCount.RealTest
         static void Main(string[] args)
         {
             //WithRealTextFile();
-            WithHugeGeneratedTextFile(128 * 1024 * 1024);   //~ 128 MB
+            //WithHugeGeneratedTextFile(128 * 1024 * 1024);   //~ 128 MB
+            WithInvalidInput();
             
             Console.ReadLine();
         }
@@ -48,6 +49,17 @@ namespace WordCount.RealTest
         {
             var inputPath = @"Tihiy_Don_p.txt";
             var outputPath = @"Tihiy_Don_wordcount.txt";
+
+            var sw = Stopwatch.StartNew();
+            WordCount.Program.Main(new[] { inputPath, outputPath });
+            sw.Stop();
+            Console.WriteLine("Finished in {0}", sw.Elapsed);
+        }
+
+        static void WithInvalidInput()
+        {
+            var inputPath = @"Tihiy_Don_p.txt";
+            var outputPath = @"C:\a";
 
             var sw = Stopwatch.StartNew();
             WordCount.Program.Main(new[] { inputPath, outputPath });
