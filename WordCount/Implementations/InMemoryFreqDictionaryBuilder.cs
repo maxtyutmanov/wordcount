@@ -9,7 +9,7 @@ namespace WordCount.Implementations
     {
         public IEnumerable<WordWithCount> BuildOrderedDict(IEnumerable<string> words)
         {
-            var internalDict = new Dictionary<string, int>(StringComparer.Ordinal);
+            var internalDict = new Dictionary<string, int>();
 
             foreach (string word in words)
             {
