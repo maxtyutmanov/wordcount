@@ -39,7 +39,7 @@ namespace WordCount.RealTest
             Console.WriteLine("Finished generating file");
 
             var sw = Stopwatch.StartNew();
-            WordCount.Program.Main(new[] { inputPath, outputPath });
+            WordCount.Program.Main(new[] { inputPath, outputPath, "/instrument" });
             sw.Stop();
             Console.WriteLine("Finished in {0}", sw.Elapsed);
         }

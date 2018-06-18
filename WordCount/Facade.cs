@@ -46,19 +46,22 @@ namespace WordCount
                 .Select(BuildFreqDictionaryFromWordsInQueue)
                 .ToArray();
 
-            ReadWordsFromFileIntoQueues(input, partitionQueues);
-
-            Task.WaitAll(freqDictBuildTasks);
+            Instrument.This(() =>
+            {
+                ReadWordsFromFileIntoQueues(input, partitionQueues);
+                Task.WaitAll(freqDictBuildTasks);
+            }, "building freq dictionaries for each partition");
 
             var partitionDicts = freqDictBuildTasks.Select(t => t.Result).ToArray();
 
-            // run merge task in the background thread
-            var mergeTask = MergePartitionDictionariesIntoOutputQueue(partitionDicts, outputQueue);
-
-            WriteOutputQueueToOutputStream(outputQueue, output);
-
-            // make sure the merge task completed successfully
-            mergeTask.Wait();
+            Instrument.This(() =>
+            {
+                // run merge task in the background thread
+                var mergeTask = MergePartitionDictionariesIntoOutputQueue(partitionDicts, outputQueue);
+                WriteOutputQueueToOutputStream(outputQueue, output);
+                // make sure the merge task completed successfully
+                mergeTask.Wait();
+            }, "merging freq dictionaries to output file");
         }
 
         private void WriteOutputQueueToOutputStream(BlockingCollection<WordWithCount> outputQueue, Stream output)

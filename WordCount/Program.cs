@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using WordCount.Implementations;
+using WordCount.Utils;
 
 namespace WordCount
 {
@@ -10,8 +11,13 @@ namespace WordCount
         {
             if (args.Length < 2)
             {
-                Console.WriteLine("Not enough arguments. Usage: wordcount.exe input_file_path output_file_path");
+                Console.WriteLine("Not enough arguments. Usage: wordcount.exe input_file_path output_file_path [/instrument]");
                 return;
+            }
+
+            if (args.Length > 2 && args[2] == "/instrument")
+            {
+                Instrument.Initialize(new ConsoleInstrumentationWriter());
             }
 
             try
